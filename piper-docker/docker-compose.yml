@@ -1,0 +1,16 @@
+version: "3.8"
+
+services:
+  piper-tts:
+    build: .
+    container_name: piper-tts
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./models:/app/models
+      - ./espeak-ng-data:/app/espeak-ng-data
+    restart: unless-stopped
+    environment:
+      - MODEL_PATH=models/denis.onnx
+      - CONFIG_PATH=models/denis-onnx.json
+      - ESPEAK_PATH=espeak-ng-data

@@ -1,0 +1,27 @@
+version: "3.8"
+
+services:
+  tts:
+    build: ./services/tts
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./services/tts/models:/app/models
+      - ./services/tts/espeak-ng-data:/app/espeak-ng-data
+
+  stt:
+    build: ./services/stt
+    devices:
+      - "/dev/snd:/dev/snd"
+    volumes:
+      - ./services/stt/model:/app/model
+    restart: unless-stopped
+
+  assistant:
+    build: ./services/assistant
+    ports:
+      - "8000:8000"
+    depends_on:
+      - stt
+      - tts
+
