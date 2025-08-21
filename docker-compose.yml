@@ -17,11 +17,3 @@ services:
       - ./services/stt/model:/app/model
     restart: unless-stopped
 
-  assistant:
-    build: ./services/assistant
-    ports:
-      - "8000:8000"
-    depends_on:
-      - stt
-      - tts
-
